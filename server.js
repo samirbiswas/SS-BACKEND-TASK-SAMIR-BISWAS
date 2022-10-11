@@ -1,15 +1,32 @@
-const express = require('express')
-const cors = require('cors')
-const morgan = require('morgan')
-const PORT = 8000
-
+const express = require("express")
+const morgan = require("morgan");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const { connect } = require('mongoose')
+const router = require('./Routes')
 const app = express()
-app.use(cors())
-app.use(express.json())
-app.use(morgan('dev'))
 
-app.get("/", (req, res) => {
-    res.send("hello")
+dotenv.config();
+app.use(express.json())
+app.use(cors());
+app.use(morgan("dev"));
+
+app.use(router)
+
+app.use((err, req, res, next) => {
+    const message = err.message ? err.message : 'Server Error Occured';
+    const status = err.status ? err.status : 500
+    res.status(status).json({ message })
 })
 
-app.listen(PORT, () => console.log(`Server is running on the port:${PORT}`));
+connect('mongodb://127.0.0.1:27017/redonion')
+    .then(() => {
+        console.log("Database connected successfully");
+    })
+    .catch((err) => console.log(err))
+
+
+const PORT = process.env.PORT || 4005
+app.listen(PORT, () => {
+    console.log(`Server is running port ${PORT}`);
+});
