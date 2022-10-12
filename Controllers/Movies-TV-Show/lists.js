@@ -6,7 +6,7 @@ exports.lists = async (req, res, next) => {
         const find_movie_tv_shows = await Movie_Tv_Show.find()
 
         return res.status(200).json({
-            list: find_movie_tv_shows
+            data: find_movie_tv_shows
         })
     } catch (error) {
         next(error)
@@ -14,15 +14,16 @@ exports.lists = async (req, res, next) => {
 }
 
 // single list of movies and tv shows
+// type: req.query.type
 exports.single_list = async (req, res, next) => {
     try {
 
         const find_movie_tv_show = await Movie_Tv_Show.find({
             type: req.query.type
         }).select("title")
-       
+
         return res.status(200).json({
-            name: find_movie_tv_show
+            data: find_movie_tv_show
         })
     } catch (error) {
         next(error)

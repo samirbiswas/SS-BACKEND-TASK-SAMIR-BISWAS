@@ -10,10 +10,14 @@ const movieTvShowSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['MOVIES', 'TV-SHOW'],
+        enum: ['MOVIE', 'TV-SHOW'],
         required: true,
         default: "MOVIES"
     },
+    mode: [{
+        type: String,
+        required: true,
+    }],
     cast: [{
         type: String,
         required: true,
@@ -22,7 +26,7 @@ const movieTvShowSchema = new Schema({
         type: Number,
         required: true,
     },
-    released_date: {
+    release_date: {
         type: Date,
         required: true,
     },
@@ -30,10 +34,10 @@ const movieTvShowSchema = new Schema({
         type: String,
         required: true,
     }],
-    producer: {
+    producer: [{
         type: String,
         required: true,
-    }
+    }]
 },
     { timestamps: true, minimize: false }
 )

@@ -12,13 +12,14 @@ exports.create = async (req, res, next) => {
             release_date: req.body.release_date,
             directors: req.body.directors,
             producer: req.body.producer,
+            mode: req.body.mode
 
         })
 
         const result = await movie_tv_show.save()
 
         return res.status(200).json({
-            message: `${result.type} Created successfully`
+            message: `${result.type} created successfully`
         })
     } catch (error) {
         next(error)
